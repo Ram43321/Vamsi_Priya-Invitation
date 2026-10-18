@@ -101,6 +101,75 @@ a {
   border-radius: 2px;
 }
 
+.music-toggle {
+  position: fixed;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 1px solid rgba(231, 198, 124, 0.8);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(74, 20, 36, 0.96), rgba(35, 14, 23, 0.96));
+  box-shadow: 0 12px 28px rgba(23, 10, 16, 0.38), inset 0 1px 0 rgba(252, 238, 202, 0.18);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.music-toggle:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(23, 10, 16, 0.42), inset 0 1px 0 rgba(252, 238, 202, 0.18);
+}
+
+.music-toggle:focus-visible {
+  outline: 2px solid rgba(245, 220, 168, 0.9);
+  outline-offset: 3px;
+}
+
+.music-toggle__waves {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.22rem;
+  width: 1.75rem;
+  height: 1.45rem;
+}
+
+.music-toggle__bar {
+  display: block;
+  width: 0.22rem;
+  min-height: 0.35rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #f9eabb, #d8a94b 65%, #b87f23);
+  box-shadow: 0 0 8px rgba(249, 234, 187, 0.35);
+  transform-origin: center bottom;
+  animation: music-wave 1s ease-in-out infinite alternate;
+}
+
+.music-toggle__bar--1 { height: 0.45rem; animation-delay: 0.1s; }
+.music-toggle__bar--2 { height: 0.8rem; animation-delay: 0.2s; }
+.music-toggle__bar--3 { height: 1.1rem; animation-delay: 0.35s; }
+.music-toggle__bar--4 { height: 0.7rem; animation-delay: 0.5s; }
+
+.music-toggle.is-off .music-toggle__bar {
+  opacity: 0.45;
+  filter: grayscale(0.2);
+  animation: none;
+  height: 0.5rem;
+}
+
+.music-toggle.is-off .music-toggle__bar--3 {
+  opacity: 0.7;
+}
+
+@keyframes music-wave {
+  0% { transform: scaleY(0.38); opacity: 0.7; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+
 .skip-link:focus {
   top: 1rem;
 }
@@ -438,6 +507,116 @@ a {
   pointer-events: none;
 }
 
+.bird-flock {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-birds {
+  opacity: 0.9;
+}
+
+.bird-container {
+  position: absolute;
+  left: -12%;
+  top: var(--y);
+  width: 72px;
+  height: 36px;
+  animation: bird-fly var(--d) linear infinite;
+  animation-delay: var(--delay);
+  transform: scale(var(--s));
+}
+
+.bird {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-12deg);
+  animation: bird-sway var(--fd) ease-in-out infinite alternate;
+  animation-delay: var(--fdelay);
+}
+
+.bird__wing,
+.bird__body {
+  position: absolute;
+  display: block;
+  background: linear-gradient(180deg, rgba(245, 222, 169, 0.95), rgba(209, 165, 75, 0.82));
+  box-shadow: 0 0 12px rgba(245, 222, 169, 0.2);
+}
+
+.bird__wing {
+  top: 12px;
+  width: 30px;
+  height: 10px;
+  border-radius: 100% 100% 12% 100%;
+}
+
+.bird__wing--left {
+  left: 6px;
+  transform-origin: right center;
+  transform: rotate(-22deg);
+}
+
+.bird__wing--right {
+  right: 6px;
+  transform: scaleX(-1) rotate(-22deg);
+  transform-origin: left center;
+}
+
+.bird__body {
+  left: 50%;
+  top: 13px;
+  width: 20px;
+  height: 10px;
+  border-radius: 50% 60% 55% 45%;
+  transform: translateX(-50%);
+}
+
+.bird__body::before,
+.bird__body::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  width: 8px;
+  height: 8px;
+  background: rgba(245, 222, 169, 0.9);
+  border-radius: 50%;
+}
+
+.bird__body::before {
+  left: -3px;
+}
+
+.bird__body::after {
+  right: -3px;
+}
+
+@keyframes bird-sway {
+  0% { transform: rotate(-18deg) translateY(0); }
+  50% { transform: rotate(-10deg) translateY(-4px); }
+  100% { transform: rotate(-22deg) translateY(2px); }
+}
+
+@keyframes bird-fly {
+  0% {
+    transform: translate3d(-20vw, 0, 0) scale(var(--s));
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.8;
+  }
+  48% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(120vw, calc(var(--y) * 0.4 + 12vh), 0) scale(var(--s));
+    opacity: 0;
+  }
+}
+
 .hero__arch {
   position: absolute;
   width: min(760px, 108vw);
@@ -724,6 +903,14 @@ a {
   letter-spacing: 0.08em;
 }
 
+.event-card__time {
+  margin: 0.35rem 0 0.7rem;
+  color: var(--champagne);
+  font-size: 0.88rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
 .event-card__copy {
   margin: 0 0 0.8rem;
   max-width: 18rem;
@@ -753,6 +940,19 @@ a {
   font-family: var(--serif);
   font-size: clamp(1.2rem, 3vw, 1.7rem);
   color: var(--gold-bright);
+}
+
+.footer__names--single {
+  margin-top: 0.1rem;
+  margin-bottom: 0.9rem;
+}
+
+.footer__along-with {
+  margin: 0.2rem 0 0.1rem;
+  font-family: var(--serif);
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  color: var(--champagne);
+  letter-spacing: 0.04em;
 }
 
 .footer__copy {

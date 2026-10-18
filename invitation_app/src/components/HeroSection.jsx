@@ -7,6 +7,7 @@ import {
   Paisley,
   WeddingArch,
 } from './DecorativeOrnaments.jsx'
+import { BirdFlock } from './BirdFlock.jsx'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion.js'
 
 export function HeroSection() {
@@ -48,6 +49,7 @@ export function HeroSection() {
       <Paisley className="hero__paisley hero__paisley--left" />
       <Paisley className="hero__paisley hero__paisley--right" />
       <WeddingArch className="hero__arch" />
+      {/* <BirdFlock className="hero-birds" /> */}
 
       <div className="hero__stage">
         <div className="hero__glow" aria-hidden="true" />

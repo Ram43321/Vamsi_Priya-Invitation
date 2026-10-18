@@ -8,8 +8,10 @@ export function Footer() {
       <GoldDivider className="divider" />
       <p className="script-line">With Love & Blessings</p>
       <p className="footer__names">
-        {weddingDetails.groomsName} & {weddingDetails.bridesName}
+        {weddingDetails.fatherName} & {weddingDetails.motherName}
       </p>
+      <p className="footer__along-with">along with</p>
+      <p className="footer__names footer__names--single">{weddingDetails.brotherName}</p>
       <p className="footer__copy">
         We look forward to celebrating these beautiful moments with you.
       </p>

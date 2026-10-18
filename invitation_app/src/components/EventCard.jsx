@@ -13,6 +13,7 @@ export function EventCard({ event }) {
       {featured ? <p className="event-card__badge">Wedding Day</p> : null}
       <h3 className="event-card__title">{event.title}</h3>
       <p className="event-card__date">{event.date}</p>
+      <p className="event-card__time">{event.time}</p>
       <p className="event-card__copy">{event.description}</p>
       <a
         className="gold-button gold-button--link"
