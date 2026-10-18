@@ -10,7 +10,6 @@ export function Footer() {
       <p className="footer__names">
         {weddingDetails.fatherName} & {weddingDetails.motherName}
       </p>
-      <p className="footer__along-with">along with</p>
       <p className="footer__names footer__names--single">{weddingDetails.brotherName}</p>
       <p className="footer__copy">
         We look forward to celebrating these beautiful moments with you.
