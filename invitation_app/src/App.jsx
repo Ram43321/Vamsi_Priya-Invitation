@@ -28,34 +28,65 @@ function App() {
 
     audio.volume = 0.35
 
-    if (musicOn) {
-      audio.play().catch(() => {})
-      return
+    let isMounted = true
+    const removeInteractionListeners = () => {
+      document.removeEventListener('pointerdown', startPlayback, true)
+      document.removeEventListener('keydown', startPlayback, true)
+    }
+    const startPlayback = () => {
+      audio.play().then(() => {
+        if (!isMounted) return
+        setMusicOn(true)
+        removeInteractionListeners()
+      }).catch(() => {
+        if (isMounted) setMusicOn(false)
+      })
     }
 
-    audio.pause()
-  }, [musicOn])
+    audio.play().then(() => {
+      if (isMounted) setMusicOn(true)
+    }).catch(() => {
+      if (!isMounted) return
+      document.addEventListener('pointerdown', startPlayback, true)
+      document.addEventListener('keydown', startPlayback, true)
+    })
+
+    return () => {
+      isMounted = false
+      removeInteractionListeners()
+    }
+  }, [])
+
+  function handleOpenStart() {
+    const audio = audioRef.current
+    if (!audio) return
+
+    audio.volume = 0.35
+    audio.play().then(() => setMusicOn(true)).catch(() => setMusicOn(false))
+  }
 
   function handleOpened() {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
     setOpened(true)
-    setMusicOn(true)
-
-    const audio = audioRef.current
-    if (audio) {
-      audio.volume = 0.35
-      audio.currentTime = 0
-      audio.play().catch(() => {})
-    }
   }
 
   function toggleMusic() {
-    setMusicOn((current) => !current)
+    const audio = audioRef.current
+    if (!audio) return
+
+    if (musicOn) {
+      audio.pause()
+      setMusicOn(false)
+      return
+    }
+
+    audio.volume = 0.35
+    audio.play().then(() => setMusicOn(true)).catch(() => setMusicOn(false))
   }
 
   return (
     <>
-      <audio ref={audioRef} src="/mangalyam.mp3" loop preload="auto" />
+      <audio ref={audioRef} src="/mangalyam.mp3" autoPlay loop preload="auto" />
 
       <button
         type="button"
@@ -75,7 +106,9 @@ function App() {
         Skip to invitation
       </a>
 
-      {showIntro ? <InvitationIntro onOpened={handleOpened} /> : null}
+      {showIntro ? (
+        <InvitationIntro onOpenStart={handleOpenStart} onOpened={handleOpened} />
+      ) : null}
 
       <div
         className={`site ${showIntro ? 'is-veiled' : 'is-revealed'}`}

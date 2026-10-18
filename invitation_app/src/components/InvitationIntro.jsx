@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { weddingDetails } from '../data/weddingDetails.js'
 import { CornerOrnament, Mandala, SealMandala } from './DecorativeOrnaments.jsx'
 
-export function InvitationIntro({ onOpened }) {
+export function InvitationIntro({ onOpenStart, onOpened }) {
   const [opening, setOpening] = useState(false)
   const timeoutRef = useRef(null)
 
@@ -15,6 +15,7 @@ export function InvitationIntro({ onOpened }) {
   function handleOpen() {
     if (opening) return
     setOpening(true)
+    onOpenStart()
     timeoutRef.current = window.setTimeout(() => {
         onOpened()
     }, 1800)
